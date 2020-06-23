@@ -61,6 +61,8 @@ while winner == 0:
     ### Tjekker om der er nogen der har vundet på mini borene 
     for i in range(9):
         if won[i] == 0:
+            if any((True for x in board[i] if x == 0)) == False:
+                won[i] = 3
             for j in range(3):
                 if [board[i][j*3],board[i][j*3+1],board[i][j*3+2]] == [1,1,1]:
                     won[i] = 1
@@ -86,8 +88,6 @@ while winner == 0:
             elif [board[i][2],board[i][4],board[i][6]] == [2,2,2]:
                     won[i] = 2
                     break
-            elif any((True for x in board[i] if x == 0)) == False:
-                    won[i] = 3
     for j in range(3):
         if [won[j*3],won[j*3+1],won[j*3+2]] == [1,1,1]:
             winner = 1
