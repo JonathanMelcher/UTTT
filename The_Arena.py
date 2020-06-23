@@ -1,5 +1,6 @@
 import sys
 import random as rng
+
 board = []
 won = []
 winner = 0
@@ -13,40 +14,46 @@ for i in range(9):
 for i in range(9):
     for j in range(9):
         board[i].append(0)
+# Du kan enten bruge numpy array med np.zeros for at gøre det hurtigere ellere
+# det er muligt at skrive board = [[0] * 9] * 9, for at få samme resultat
 
 
-def Player1(B, t):
-    if t == 9:
-        for i in range(9):
-            if won[i] == 0 and any((True for x in B[i] if x == 0)) == True:
-                a = i
-                break
-    else:
-        a = t
-    b = B[a].index(0)
-    return a,b
 
-def Player2(B,t):
-    if t == 9:
-        list = []
-        for i in range(9):
-            if won[i] == 0 and any((True for x in B[i] if x == 0)) == True:
-                list.append(i)
-        a = rng.choice(list)
-    else:
-        a = t
-    list =[]
-    for i in range(9):
-        if B[a][i] == 0:
-            list.append(i)
-    b = rng.choice(list)
-    return a,b
+# Skriv lidt dokumentation, hvad skal til B og t være ;)
+# def Player1(B, t):
+#     if t == 9:
+#         for i in range(9):
+#             if won[i] == 0 and any((True for x in B[i] if x == 0)) == True:
+#                 a = i
+#                 break
+#     else:
+#         a = t
+#     b = B[a].index(0)
+#     return a,b
+
+# def Player2(B,t):
+#     if t == 9:
+#         list = []
+#         for i in range(9):
+#             if won[i] == 0 and any((True for x in B[i] if x == 0)) == True:
+#                 list.append(i)
+#         a = rng.choice(list)
+#     else:
+#         a = t
+#     list =[]
+#     for i in range(9):
+#         if B[a][i] == 0:
+#             list.append(i)
+#     b = rng.choice(list)
+#     return a,b
+
+from player_generation import Player1, Player2
 
 while winner == 0:
     if tur ==1:
-        a,b = Player1(board,T)
+        a,b = Player1(board,T, won)
     elif tur == 2:
-        a,b = Player2(board,T)
+        a,b = Player2(board,T, won)
     if T !=9: ## tjekker om det er et gyldigt træk. Et træk kan være ugyldigt hvis, det ikke er på det tvungende minispil, feltet allerede er taget eller minispillet er vundet.
         if a != T:
             print(f'Player{tur} snyder')
