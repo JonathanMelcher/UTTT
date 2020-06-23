@@ -84,13 +84,15 @@ while winner == 0:
                     won[i] = 1
                     break
             elif [board[i][2],board[i][4],board[i][6]] == [2,2,2]:
-                    won[i] = 1
+                    won[i] = 2
                     break
+            elif any((True for x in board[i] if x == 0)) == False:
+                    won[i] = 3
     for j in range(3):
-        if [won[j],won[j+1],won[j+2]] == [1,1,1]:
+        if [won[j*3],won[j*3+1],won[j*3+2]] == [1,1,1]:
             winner = 1
             break
-        elif [won[j],won[j+1],won[j+2]] == [2,2,2]:
+        elif [won[j*3],won[j*3+1],won[j*3+2]] == [2,2,2]:
             winner = 2
             break
         elif [won[j],won[j+3],won[j+6]] == [1,1,1]:
