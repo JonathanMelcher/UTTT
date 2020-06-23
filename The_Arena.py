@@ -1,8 +1,9 @@
 import sys
+import random as rng
 board = []
 won = []
 winner = 0
-T = 0
+T = 9
 tur = 1
 
 ### Laver bordet
@@ -14,19 +15,39 @@ for i in range(9):
         board[i].append(0)
 
 
-def Player1(b, t):
-    return t,4
+def Player1(B, t):
+    if t == 9:
+        for i in range(9):
+            if won[i] == 0 and any((True for x in B[i] if x == 0)) == True:
+                a = i
+                break
+    else:
+        a = t
+    b = B[a].index(0)
+    return a,b
 
-def Player2(b,t):
-    return t,3
-
+def Player2(B,t):
+    if t == 9:
+        list = []
+        for i in range(9):
+            if won[i] == 0 and any((True for x in B[i] if x == 0)) == True:
+                list.append(i)
+        a = rng.choice(list)
+    else:
+        a = t
+    list =[]
+    for i in range(9):
+        if B[a][i] == 0:
+            list.append(i)
+    b = rng.choice(list)
+    return a,b
 
 while winner == 0:
     if tur ==1:
         a,b = Player1(board,T)
     elif tur == 2:
         a,b = Player2(board,T)
-    if T !=0: ## tjekker om det er et gyldigt træk. Et træk kan være ugyldigt hvis, det ikke er på det tvungende minispil, feltet allerede er taget eller minispillet er vundet.
+    if T !=9: ## tjekker om det er et gyldigt træk. Et træk kan være ugyldigt hvis, det ikke er på det tvungende minispil, feltet allerede er taget eller minispillet er vundet.
         if a != T:
             print(f'Player{tur} snyder')
             sys.exit()
@@ -35,16 +56,16 @@ while winner == 0:
         sys.exit()
     if won[a] != 0:
         print(f'Player{tur} prøver at tage på et vundet mini spil')
-
+        sys.exit()
     board[a][b] = tur # Trækket tages
     ### Tjekker om der er nogen der har vundet på mini borene 
     for i in range(9):
         if won[i] == 0:
             for j in range(3):
-                if [board[i][j],board[i][j+1],board[i][j+2]] == [1,1,1]:
+                if [board[i][j*3],board[i][j*3+1],board[i][j*3+2]] == [1,1,1]:
                     won[i] = 1
                     break
-                elif [board[i][j],board[i][j+1],board[i][j+2]] == [2,2,2]:
+                elif [board[i][j*3],board[i][j*3+1],board[i][j*3+2]] == [2,2,2]:
                     won[i] = 2
                     break
                 elif [board[i][j],board[i][j+3],board[i][j+6]] == [1,1,1]:
@@ -86,11 +107,21 @@ while winner == 0:
         winner = 1
     elif [won[2],won[4],won[6]] == [2,2,2]:
         winner = 2
-    
+    if any((True for x in won if x == 0)) == False:
+        print('TIE')
+        sys.exit()
+    if won[a] != 0 or any((True for x in board[a] if x == 0)) == False:
+        T = 9
+    elif won[b] == 0:
+        T = b
+    print(T, tur)
+    print(board)
+    print(won)
     if tur ==1:
         tur = 2
     elif tur == 2:
         tur = 1
+
         
 if winner != 0:
     print(f'AND THE WINNER IS ......... PLAYER {winner}')
