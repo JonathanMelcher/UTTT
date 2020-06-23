@@ -1,5 +1,3 @@
-import marshal as pickle
-
 def Player1(B, t, won):
     if t == 9:
         for i in range(9):
