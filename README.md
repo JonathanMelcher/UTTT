@@ -25,11 +25,11 @@ Det første index skal være hvilket local board og det andet hvilken position i
 Den måde 'board' fungere er en 2d array med 9 arrays der er 9 lange i. Altså kan alle positioner findes ved et index i fra 0 til 8 som giver hvilket local board og så et index j fra 0 til 8
 som giver hvilket sted på dette local board. Både global og local board er indekseret på følgende måde
 
-                                                                0 | 1 | 2
-                                                                ---------
-                                                                3 | 4 | 5
-                                                                ---------
-                                                                6 | 7 | 8
+                                                       0 | 1 | 2
+                                                       ---------
+                                                       3 | 4 | 5
+                                                       ---------
+                                                       6 | 7 | 8
 
 Altså er board[4][4] svare til det midterste local boards midter felt. Et vundet local board kan se således ud [0,1,2,1,2,0,2,1,1], her har 2 vundet på diagonalen.
 
