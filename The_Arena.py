@@ -56,7 +56,7 @@ while winner == 0:
         a,b = Player1(board,T, won)
     elif tur == 2:
         a,b = Player2(board,T, won)
-    if T !=9: ## tjekker om det er et gyldigt træk. Et træk kan være ugyldigt hvis, det ikke er på det tvungne minispil, feltet allerede er taget eller minispillet er vundet.
+    if T !=9: ## tjekker om det er et gyldigt træk. Et træk kan være ugyldigt hvis, det ikke er på det tvungne local board, feltet allerede er taget eller local boardet er vundet.
         if a != T:
             print(f'Player{tur} snyder')
             sys.exit()
@@ -123,8 +123,8 @@ while winner == 0:
     if any((True for x in won if x == 0)) == False:
         print('TIE')
         sys.exit()
-    ## Opdatere hvad det tvungne minispil er
-    if won[b] != 0 or any((True for x in board[b] if x == 0)) == False: # bestemmer hvad det tvungne minispil er, hvis minispillet er vundet eller uafgjort bliver T=9 hvilket svare til fri.
+    ## Opdatere hvad det tvungne local board er
+    if won[b] != 0 or any((True for x in board[b] if x == 0)) == False: # bestemmer hvad det tvungne local board er, hvis local boardet er vundet eller uafgjort bliver T=9 hvilket svare til fri.
         T = 9
     elif won[b] == 0:
         T = b
