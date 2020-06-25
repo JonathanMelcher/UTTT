@@ -1,7 +1,7 @@
 import sys
 import random as rng
 
-board = []
+board = [] 
 won = []
 winner = 0
 T = 9
@@ -14,8 +14,10 @@ for i in range(9):
 for i in range(9):
     for j in range(9):
         board[i].append(0)
-# Du kan enten bruge numpy array med np.zeros for at gøre det hurtigere ellere
-# det er muligt at skrive board = [[0] * 9] * 9, for at få samme resultat
+# Du kan enten bruge numpy array med np.zeros for at gøre det hurtigere eller
+# det er muligt at skrive board = [[0] * 9] * 9, for at få samme resultat. 
+# (Har prøvet dette men giver vildt mærkelige resultater som jeg ikke kan få til at give mening.
+# det gør at player 1 tager et træk på alle bordene på samme tid.)
 
 
 
@@ -47,14 +49,14 @@ for i in range(9):
 #     b = rng.choice(list)
 #     return a,b
 
-from player_generation import Player1, Player2
+from player_generation import Player1, Player2 # De to funktioner fra player_generation importeres
 
 while winner == 0:
     if tur ==1:
         a,b = Player1(board,T, won)
     elif tur == 2:
         a,b = Player2(board,T, won)
-    if T !=9: ## tjekker om det er et gyldigt træk. Et træk kan være ugyldigt hvis, det ikke er på det tvungende minispil, feltet allerede er taget eller minispillet er vundet.
+    if T !=9: ## tjekker om det er et gyldigt træk. Et træk kan være ugyldigt hvis, det ikke er på det tvungne minispil, feltet allerede er taget eller minispillet er vundet.
         if a != T:
             print(f'Player{tur} snyder')
             sys.exit()
@@ -68,6 +70,7 @@ while winner == 0:
     ### Tjekker om der er nogen der har vundet på mini borene 
     for i in range(9):
         if won[i] == 0:
+            # Tjekker om der er nogen spil der er blevet uafgjort og sætter dem til 3 i won listen.
             if any((True for x in board[i] if x == 0)) == False:
                 won[i] = 3
             for j in range(3):
@@ -95,6 +98,7 @@ while winner == 0:
             elif [board[i][2],board[i][4],board[i][6]] == [2,2,2]:
                     won[i] = 2
                     break
+    ## Tjekker om der er nogen der har vundet hele spillet.
     for j in range(3):
         if [won[j*3],won[j*3+1],won[j*3+2]] == [1,1,1]:
             winner = 1
@@ -119,13 +123,12 @@ while winner == 0:
     if any((True for x in won if x == 0)) == False:
         print('TIE')
         sys.exit()
-    if won[a] != 0 or any((True for x in board[a] if x == 0)) == False:
+    ## Opdatere hvad det tvungne minispil er
+    if won[b] != 0 or any((True for x in board[b] if x == 0)) == False: # bestemmer hvad det tvungne minispil er, hvis minispillet er vundet eller uafgjort bliver T=9 hvilket svare til fri.
         T = 9
     elif won[b] == 0:
         T = b
-    print(T, tur)
-    print(board)
-    print(won)
+    ## Opdatere hvis tur det er
     if tur ==1:
         tur = 2
     elif tur == 2:
