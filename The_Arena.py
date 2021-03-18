@@ -122,6 +122,8 @@ while winner == 0:
         winner = 2
     if any((True for x in won if x == 0)) == False:
         print('TIE')
+        print(board)
+        print(won)
         sys.exit()
     ## Opdatere hvad det tvungne local board er
     if won[b] != 0 or any((True for x in board[b] if x == 0)) == False: # bestemmer hvad det tvungne local board er, hvis local boardet er vundet eller uafgjort bliver T=9 hvilket svare til fri.
@@ -136,4 +138,6 @@ while winner == 0:
 
         
 if winner != 0:
+    print(board)
+    print(won)
     print(f'AND THE WINNER IS ......... PLAYER {winner}')
